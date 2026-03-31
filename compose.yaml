@@ -15,6 +15,9 @@ services:
       - my-cust-bridge
     volumes:
       - 'db-volm:/var/lib/mysql'
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass123
+      
 
 
 networks:
