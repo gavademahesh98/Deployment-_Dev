@@ -1,6 +1,6 @@
 services:
   login:
-    image: maheshg98/my-login-app:v1
+    image: maheshg98/service_login:latest
     ports:
       - '4545:8080'
     networks:
@@ -17,12 +17,42 @@ services:
       - 'db-volm:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=pass123
+
+
+  trivia_front_service:
+    image: maheshg98/trivia-front:latest
+    ports:
+      - '80:80'
+    networks:
+      - my-trivia-net
+
+
+  trivia_back_service:
+    image: maheshg98/trivia-back:latest
+    ports:
+      - '3000:3000'
+    networks:
+      - my-trivia-net
+
+
+  trivia_db:
+    image: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - my-trivia-net
+    volumes:
+      - trivia-db-data:/data/db
       
 
 
 networks:
   my-cust-bridge:
     name: my-cust-bridge
+  my-trivia-net:
+    name: my-trivia-net
 volumes:
   db-volm:
     name: db-volm
+  trivia-db-data:
+    name: trivia-db-data
